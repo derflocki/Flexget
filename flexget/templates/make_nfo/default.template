@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% if series_name is defined %}
+<episodedetails>
+	{% if tvdb_genres is defined and tvdb_genres is iterable %}
+		<genre>{{tvdb_genres|join(" / ")}}</genre>
+		{% endif %}
+	<season>{{tvdb_season}}</season>
+	<episode>{{tvdb_episode}}</episode>
+	<aired>{{tvdb_ep_air_date}}</aired>
+	<image>{{tvdb_ep_image_url}}</image>
+	<plot>{{ tvdb_ep_overview }}</plot>
+	{% if tvdb_ep_rating is defined %}
+		<rating>{{tvdb_ep_rating}}</rating>
+	{% endif %}
+</episodedetails>
+{% elif imdb_url is defined %}
+<movie>
+	<year>{{imdb_year}}</year>
+	{% if imdb_genres is defined and imdb_genres is iterable %}
+		<genre>{{imdb_genres|join(" / ")}}</genre>
+	{% endif %}
+	{% if imdb_plot_outline is defined %}
+	<plot>{{ imdb_plot_outline }}</plot>
+	{% endif %}
+	<rating>{{imdb_score}}</rating>
+	<image>{{imdb_photo}}</image>
+	{% if tmdb_posters is defined %}
+		{% for p in tmdb_posters %}
+		<image>{{p}}</image>
+		{% endfor %}
+	{% endif %}
+</movie>
+{% endif %}
